@@ -4,7 +4,7 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 function FormCadastro() {
   return (
     <Form>
-      <Col xs={10} sm={8} className="d-flex flex-column form-panel">
+      <Col xs={10} sm={8} className="d-flex flex-column mx-auto form-panel">
         <h1 className="fw-bold mb-3">Cadastro de novo usuário</h1>
         <Form.Group as={Col} sm={12} className="mb-3">
           <Form.Label>Nome</Form.Label>
