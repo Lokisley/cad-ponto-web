@@ -1,2 +1,9 @@
+.form-panel {
+  padding: 30px;
+  background-color: rgb(233, 233, 233);
+  border-radius: 15px;
   justify-content: center;
+  align-self: center;
+  box-shadow: -8px 8px 30px rgb(0, 0, 0, 0.22);
+  margin: 5px;
 }
