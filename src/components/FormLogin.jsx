@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Col } from "react-bootstrap";
 
-function FormLogin() {
+function FormLogin(props) {
   const [values, setValues] = useState({});
 
   const onFormChange = (e) => {
@@ -16,11 +16,16 @@ function FormLogin() {
     event.persist();
     console.log("push data somewhere :)");
     console.log(values);
+    props.setCookies("user", values);
 
     //TODO: make login request to the back-end
     //TODO: if login success, set cookie with user data
     //TODO: if login fails, show error message
   };
+
+  // const submit = () => {
+  //   props.setCookies("user", { email: "1", password: "2", name: "fulano" });
+  // };
 
   return (
     <Form onSubmit={submit}>
@@ -41,6 +46,9 @@ function FormLogin() {
         <Button onClick={submit} variant="primary" className="my-3 ms-auto">
           Entrar
         </Button>
+        <a href="#" className="link-primary">
+          Cadastre-se aqui!
+        </a>
       </Col>
     </Form>
   );
