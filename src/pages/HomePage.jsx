@@ -1,6 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 import FormLogin from "../components/FormLogin";
 import FormCadastro from "../components/FormCadastro";
+import FormEdit from "../components/FormEdit";
 import LoggedButtons from "../components/LoggedButtons";
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
@@ -38,6 +39,15 @@ function HomePage() {
       ) : page === "register" ? (
         <Col md={12}>
           <FormCadastro setPage={setPage} setCookies={setCookies} />
+        </Col>
+      ) : page === "edit" ? (
+        <Col md={12}>
+          <FormEdit
+            setPage={setPage}
+            setCookies={setCookies}
+            cookies={cookies}
+            removeCookie={removeCookie}
+          />
         </Col>
       ) : null}
     </Row>
