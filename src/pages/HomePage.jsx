@@ -1,5 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import FormLogin from "../components/FormLogin";
+import FormCadastro from "../components/FormCadastro";
 import LoggedButtons from "../components/LoggedButtons";
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
@@ -9,6 +10,7 @@ import { useCookies } from "react-cookie";
 function HomePage() {
   const [name, setName] = useState("Visitante");
   const [cookies, setCookies, removeCookie] = useCookies(["user"]);
+  const [page, setPage] = useState("home");
 
   useEffect(() => {
     console.log(cookies);
@@ -17,17 +19,27 @@ function HomePage() {
   }, [cookies]);
 
   return (
-    <Row className="d-flex align-items-center">
-      <Col md={6} className="ps-4 d-flex">
+    <Row className="d-flex align-items-center mt-5 mx-0">
+      <Col className="ps-4 d-flex">
         <h1 className="mx-auto my-4">Olá, {name}!</h1>
       </Col>
-      <Col md={6} className="d-flex flex-column">
-        {cookies.user ? (
-          <LoggedButtons setCookies={setCookies} removeCookie={removeCookie} />
-        ) : (
-          <FormLogin setCookies={setCookies} />
-        )}
-      </Col>
+      {page === "home" ? (
+        <Col md={6} className="d-flex flex-column">
+          {cookies.user ? (
+            <LoggedButtons
+              setPage={setPage}
+              setCookies={setCookies}
+              removeCookie={removeCookie}
+            />
+          ) : (
+            <FormLogin setPage={setPage} setCookies={setCookies} />
+          )}
+        </Col>
+      ) : page === "register" ? (
+        <Col md={12}>
+          <FormCadastro setPage={setPage} setCookies={setCookies} />
+        </Col>
+      ) : null}
     </Row>
   );
 }

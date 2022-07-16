@@ -23,6 +23,10 @@ function FormLogin(props) {
     //TODO: if login fails, show error message
   };
 
+  const register = () => {
+    props.setPage("register");
+  };
+
   // const submit = () => {
   //   props.setCookies("user", { email: "1", password: "2", name: "fulano" });
   // };
@@ -33,7 +37,7 @@ function FormLogin(props) {
         <h3 className="fw-bold mb-3">Fazer login</h3>
         <Form.Group className="mb-3">
           <Form.Label>Email, CPF ou PIS</Form.Label>
-          <Form.Control name="email" type="email" onChange={onFormChange} />
+          <Form.Control name="email" onChange={onFormChange} />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Senha</Form.Label>
@@ -46,9 +50,9 @@ function FormLogin(props) {
         <Button onClick={submit} variant="primary" className="my-3 ms-auto">
           Entrar
         </Button>
-        <a href="#" className="link-primary">
+        <Button onClick={register} variant="link">
           Cadastre-se aqui!
-        </a>
+        </Button>
       </Col>
     </Form>
   );
