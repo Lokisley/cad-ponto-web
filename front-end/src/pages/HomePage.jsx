@@ -20,7 +20,7 @@ function HomePage() {
   }, [cookies]);
 
   return (
-    <Row className="d-flex align-items-center mt-5 mx-0">
+    <Row className="d-flex align-items-center my-5 mx-0">
       <Col className="ps-4 d-flex">
         <h1 className="mx-auto my-4">Olá, {name}!</h1>
       </Col>
