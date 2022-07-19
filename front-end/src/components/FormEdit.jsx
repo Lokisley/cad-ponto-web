@@ -8,35 +8,60 @@ function FormEdit(props) {
 
   useEffect(() => {
     setData(props.cookies.user);
+    setValues(props.cookies.user);
   }, []);
 
   const onFormChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setValues({ ...values, [name]: value });
-    console.log(name, value);
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     event.persist();
-    console.log("push data somewhere :)");
-    console.log(values);
 
-    //TODO: make registration request to the back-end
+    const response = await fetch(`${props.apiURL}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
-    props.setCookies("user", values);
-    props.setPage("home");
+    response
+      .json()
+      .then((data) => {
+        props.setCookies("user", data);
+        props.setPage("home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const cancel = () => {
     props.setPage("home");
   };
 
-  const deleteUser = () => {
-    //TODO: make delete request to the back-end
-    props.removeCookie("user");
-    props.setPage("home");
+  const deleteUser = async () => {
+    const response = await fetch(`${props.apiURL}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: data.email }),
+    });
+
+    response
+      .json()
+      .then((data) => {
+        props.removeCookie("user");
+        props.setPage("home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

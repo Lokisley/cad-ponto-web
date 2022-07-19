@@ -8,18 +8,36 @@ function FormLogin(props) {
     const name = e.target.name;
     const value = e.target.value;
     setValues({ ...values, [name]: value });
-    console.log(name, value);
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     event.persist();
-    console.log("push data somewhere :)");
-    console.log(values);
-    props.setCookies("user", values);
 
-    //TODO: make login request to the back-end
-    //TODO: if login success, set cookie with user data
+    const formData = new FormData();
+    formData.append("username", values.email || values.cpf || values.pis);
+    formData.append("password", values.password);
+
+    const response = await fetch(`${props.apiURL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: values.email || values.cpf || values.pis,
+        password: values.password,
+      }),
+    });
+
+    response
+      .json()
+      .then((data) => {
+        props.setCookies("user", data);
+        props.setPage("home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     //TODO: if login fails, show error message
   };
 
@@ -27,12 +45,8 @@ function FormLogin(props) {
     props.setPage("register");
   };
 
-  // const submit = () => {
-  //   props.setCookies("user", { email: "1", password: "2", name: "fulano" });
-  // };
-
   return (
-    <Form onSubmit={submit}>
+    <Form>
       <Col sm={8} className="d-flex flex-column mx-auto form-panel">
         <h3 className="fw-bold mb-3">Fazer login</h3>
         <Form.Group className="mb-3">

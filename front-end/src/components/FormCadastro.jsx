@@ -8,19 +8,29 @@ function FormCadastro(props) {
     const name = e.target.name;
     const value = e.target.value;
     setValues({ ...values, [name]: value });
-    console.log(name, value);
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     event.persist();
-    console.log("push data somewhere :)");
-    console.log(values);
 
-    //TODO: make registration request to the back-end
+    const response = await fetch(`${props.apiURL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
-    props.setCookies("user", values);
-    props.setPage("home");
+    response
+      .json()
+      .then((data) => {
+        props.setCookies("user", data);
+        props.setPage("home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const cancel = () => {

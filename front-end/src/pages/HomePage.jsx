@@ -13,8 +13,9 @@ function HomePage() {
   const [cookies, setCookies, removeCookie] = useCookies(["user"]);
   const [page, setPage] = useState("home");
 
+  const apiURL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
-    console.log(cookies);
     if (cookies.user) setName(cookies.user.name);
     else setName("Visitante");
   }, [cookies]);
@@ -33,12 +34,20 @@ function HomePage() {
               removeCookie={removeCookie}
             />
           ) : (
-            <FormLogin setPage={setPage} setCookies={setCookies} />
+            <FormLogin
+              setPage={setPage}
+              setCookies={setCookies}
+              apiURL={apiURL}
+            />
           )}
         </Col>
       ) : page === "register" ? (
         <Col md={12}>
-          <FormCadastro setPage={setPage} setCookies={setCookies} />
+          <FormCadastro
+            setPage={setPage}
+            setCookies={setCookies}
+            apiURL={apiURL}
+          />
         </Col>
       ) : page === "edit" ? (
         <Col md={12}>
@@ -47,6 +56,7 @@ function HomePage() {
             setCookies={setCookies}
             cookies={cookies}
             removeCookie={removeCookie}
+            apiURL={apiURL}
           />
         </Col>
       ) : null}
